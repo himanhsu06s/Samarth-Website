@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+</head>
+<body>
+    <h2>Currency Converter</h2>
+
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" placeholder="Enter amount" step="0.01"><br><br>
+
+    <label for="from">From:</label>
+    <select id="from">
+        <option value="USD">US Dollar</option>
+        <option value="EUR">Euro</option>
+        <!-- Add other currency options here -->
+    </select><br><br>
+
+    <label for="to">To:</label>
+    <select id="to">
+        <option value="EUR">Euro</option>
+        <option value="USD">US Dollar</option>
+        <!-- Add other currency options here -->
+    </select><br><br>
+
+    <button onclick="convertCurrency()">Convert</button>
+
+    <p id="result"></p>
+
+    <script>
+        function convertCurrency() {
+            const amount = document.getElementById('amount').value;
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+
+            fetch(`https://openexchangerates.org/api/convert/${amount}/${from}/${to}?app_id=YOUR_APP_ID`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerHTML = `${amount} ${from} is ${data.result} ${to}`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
